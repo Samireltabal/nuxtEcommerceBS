@@ -27,6 +27,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/axios'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -53,12 +54,8 @@ export default {
         name: 'English'
       },
       {
-        code: 'es',
-        name: 'Español'
-      },
-      {
-        code: 'fr',
-        name: 'Français'
+        code: 'ar',
+        name: 'العربية'
       }
     ],
     defaultLocale: 'en',
@@ -68,8 +65,8 @@ export default {
         en: {
           welcome: 'Welcome'
         },
-        fr: {
-          welcome: 'Bienvenue'
+        ar: {
+          welcome: 'مرحباً'
         },
         es: {
           welcome: 'Bienvenido'
@@ -78,8 +75,20 @@ export default {
     }
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    retry: { retries: 3 }
+  },
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL
+    }
+  },
 
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }

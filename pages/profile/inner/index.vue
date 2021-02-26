@@ -3,7 +3,7 @@
     <div>
       <Logo />
       <h1 class="title">
-        {{ currentLocale }} - {{ $t('welcome') }} Profile - {{ ip.message }}
+        {{ $t('welcome') }} Profile
       </h1>
       <div class="links">
         <a
@@ -77,10 +77,6 @@
 
 <script>
 export default {
-  async asyncData ({ $api }) {
-    const ip = await $api.$get('ping')
-    return { ip }
-  },
   data () {
     return {
       dismissSecs: 10,
@@ -91,9 +87,6 @@ export default {
   computed: {
     availableLocales () {
       return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
-    },
-    currentLocale () {
-      return this.$i18n.locale
     }
   },
   methods: {
