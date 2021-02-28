@@ -77,8 +77,8 @@
 
 <script>
 export default {
-  async asyncData ({ $api }) {
-    const ip = await $api.$get('ping')
+  async asyncData ({ $axios }) {
+    const ip = await $axios.$get('ping')
     return { ip }
   },
   data () {
@@ -86,6 +86,7 @@ export default {
       dismissSecs: 10,
       dismissCountDown: 0,
       showDismissibleAlert: false
+      // ip: {}
     }
   },
   computed: {
@@ -96,7 +97,17 @@ export default {
       return this.$i18n.locale
     }
   },
+  mounted () {
+    // this.ping()
+  },
   methods: {
+    ping () {
+      this.$axios.get('/ping').then((response) => {
+        this.ip = response.data
+      }).catch((err) => {
+        this.ip = err.response.data
+      })
+    },
     countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },

@@ -15,8 +15,8 @@
     "bootstrap": "^5.0.0-beta2",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.8.3",
-    "nuxt": "^2.14.12",
-    "nuxt-i18n": "^6.20.2"
+    "nuxt": "^2.15.2",
+    "nuxt-i18n": "^6.20.3"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",
@@ -24,6 +24,9 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^7.18.0",
     "eslint-plugin-nuxt": "^2.0.0",
-    "eslint-plugin-vue": "^7.5.0"
+    "eslint-plugin-vue": "^7.5.0",
+    "fibers": "^5.0.0",
+    "sass": "^1.32.8",
+    "sass-loader": "^10.1.1"
   }
 }

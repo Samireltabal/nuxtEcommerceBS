@@ -22,9 +22,9 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
-    'bootstrap/dist/css/bootstrap.rtl.min.css'
+    'bootstrap/dist/css/bootstrap.rtl.min.css',
+    '~assets/css/main.scss'
   ],
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/axios'
@@ -84,11 +84,11 @@ export default {
     }
   },
 
-  privateRuntimeConfig: {
-    axios: {
-      baseURL: process.env.BASE_URL
-    }
-  },
+  // privateRuntimeConfig: {
+  //   axios: {
+  //     baseURL: process.env.BASE_URL
+  //   }
+  // },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
