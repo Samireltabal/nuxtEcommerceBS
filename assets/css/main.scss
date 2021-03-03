@@ -3,3 +3,8 @@ h1.title {
   color: #5fcbc4;
   font-weight: 700;
 }
+.navbar-brand {
+  transform: translateX(-50%);
+  left: 50%;
+  position: absolute;
+}
