@@ -6,7 +6,7 @@
           NavBar
         </b-navbar-brand>
         <!-- Navbar dropdowns -->
-        <b-nav-item-dropdown text="Lang" left>
+        <b-nav-item-dropdown :text="$t('Language')" left>
           <b-dropdown-item
             v-for="locale in langs"
             :key="locale.code"

@@ -8,3 +8,9 @@ h1.title {
   left: 50%;
   position: absolute;
 }
+:lang(ar) {
+  color: red;
+}
+:lang(en) {
+  color: blue;
+}

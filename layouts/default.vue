@@ -18,7 +18,10 @@ export default {
       htmlAttrs: {
         lang: this.currentLocale,
         dir: this.direction
-      }
+      },
+      css: [
+        this.cssFile
+      ]
     }
   },
   computed: {
@@ -33,6 +36,15 @@ export default {
         return 'rtl'
       } else {
         return 'ltr'
+      }
+    },
+    cssFile () {
+      if (this.currentLocale === 'ar') {
+        return [
+          ''
+        ]
+      } else {
+        return []
       }
     }
   }
