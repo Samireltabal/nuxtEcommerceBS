@@ -76,6 +76,7 @@
 <script>
 export default {
   layout: 'Default',
+  middleware: 'auth',
   async asyncData ({ $axios }) {
     const ip = await $axios.$get('ping')
     return { ip }
