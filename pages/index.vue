@@ -6,6 +6,9 @@
       <h1 class="title">
         ecommerce
       </h1>
+      <p>
+        {{ $t('lorem') }}
+      </p>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
