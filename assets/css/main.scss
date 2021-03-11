@@ -9,11 +9,9 @@ h1.title {
   position: absolute;
 }
 :lang(ar) {
-  // @import "bootstrap/dist/css/bootstrap.rtl.min.css";
-  color: red;
+  @import "~bootstrap/dist/css/bootstrap.rtl.min.css";
 }
 :lang(en) {
-  // @import "bootstrap/dist/css/bootstrap.min.css";
-  color: blue;
+  @import "~bootstrap/dist/css/bootstrap.min.css";
 }
 
