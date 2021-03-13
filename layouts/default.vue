@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="direction">
     <navBar />
     <div class="container-fluid">
       <Nuxt />

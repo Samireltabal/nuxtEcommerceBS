@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <Nuxt />
+    <b-row class="justify-content-md-center">
+      <b-col cols="12" md="6">
+        <Nuxt />
+      </b-col>
+    </b-row>
   </div>
 </template>
 <script>
