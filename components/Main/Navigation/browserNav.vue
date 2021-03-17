@@ -15,12 +15,16 @@
             {{ locale.name }}
           </b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item :to="$i18n.locale + '/products'">
-          {{ $t('products') }}
+        <b-nav-item>
+          <nuxt-link :to="localePath('/products')">
+            {{ $t('Products') }}
+          </nuxt-link>
         </b-nav-item>
         <b-nav-item-dropdown text="User" left>
-          <b-dropdown-item href="/products/">
-            Products
+          <b-dropdown-item>
+            <nuxt-link :to="localePath('products', 'en')">
+              {{ $t('Products') }}
+            </nuxt-link>
           </b-dropdown-item>
           <b-dropdown-item href="#">
             Account

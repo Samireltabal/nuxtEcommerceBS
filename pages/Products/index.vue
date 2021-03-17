@@ -9,7 +9,7 @@
       </b-breadcrumb-item> -->
     </b-breadcrumb>
     <h6 v-for="product in products.data" :key="product.id">
-      <nuxt-link :to="'/product/' + product.slug">
+      <nuxt-link :to="localePath('/product/' + product.slug)">
         {{ product.name }}
       </nuxt-link>
     </h6>
