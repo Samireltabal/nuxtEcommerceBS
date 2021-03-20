@@ -1,8 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <b-row class="justify-content-md-center">
-      <b-col cols="12" md="6">
+      <b-col cols="12" md="4" class="formBox">
         <Nuxt />
+      </b-col>
+      <b-col cols="12" md="12">
+        <nuxt-link :to="localePath('/')">
+          {{ $t('home') }}
+        </nuxt-link>
       </b-col>
     </b-row>
   </div>

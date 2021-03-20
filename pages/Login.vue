@@ -11,7 +11,11 @@
       <label>Password</label>
       <input type="password" class="form-control form-control-lg">
     </div>
-
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary my-2" type="button">
+        {{ $t('logintitle') }}
+      </button>
+    </div>
     <button type="submit" class="btn btn-dark btn-lg btn-block">
       Sign In
     </button>
@@ -19,6 +23,9 @@
     <p class="forgot-password text-right mt-2 mb-4">
       <router-link to="/forgot-password">
         Forgot password ?
+      </router-link>
+      <router-link to="/">
+        {{ $t('home') }}
       </router-link>
     </p>
 

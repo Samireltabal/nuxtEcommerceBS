@@ -5,7 +5,6 @@
         <b-navbar-brand href="#">
           NavBar
         </b-navbar-brand>
-        <!-- Navbar dropdowns -->
         <b-nav-item-dropdown :text="$t('Language')" left>
           <b-dropdown-item
             v-for="locale in langs"
@@ -15,23 +14,28 @@
             {{ locale.name }}
           </b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item>
-          <nuxt-link :to="localePath('/products')">
-            {{ $t('Products') }}
-          </nuxt-link>
+        <b-nav-item
+          v-for="item in nav"
+          :key="item.name"
+          :to="localePath(item.link)"
+          :class=" item.dropdown ? 'd-none' : ''"
+        >
+          {{ $t(item.name) }}
         </b-nav-item>
-        <b-nav-item-dropdown text="User" left>
-          <b-dropdown-item>
-            <nuxt-link :to="localePath('products', 'en')">
-              {{ $t('Products') }}
-            </nuxt-link>
-          </b-dropdown-item>
-          <b-dropdown-item href="#">
-            Account
-          </b-dropdown-item>
-          <b-dropdown-item href="#">
-            Settings
-          </b-dropdown-item>
+        <b-nav-item-dropdown
+          v-for="item in nav"
+          :key="item.name"
+          :text="item.name"
+          :class=" item.dropdown ? '' : 'd-none'"
+        >
+          <b-nav-item
+            v-for="child in item.children"
+            :key="child.name"
+            :to="localePath(child.link)"
+            :class=" child.dropdown ? 'd-none' : ''"
+          >
+            {{ $t(child.name) }}
+          </b-nav-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-navbar>
@@ -44,6 +48,43 @@ export default {
     langs: {
       type: Array,
       required: true
+    }
+  },
+  data () {
+    return {
+      nav: [
+        {
+          name: 'home',
+          link: '/',
+          dropdown: false,
+          children: []
+        },
+        {
+          name: 'Products',
+          link: '/products',
+          dropdown: false,
+          children: []
+        },
+        {
+          name: 'Dropdown',
+          link: '/products',
+          dropdown: true,
+          children: [
+            {
+              name: 'Products1',
+              link: '/products',
+              dropdown: false,
+              children: []
+            },
+            {
+              name: 'Products2',
+              link: '/products',
+              dropdown: false,
+              children: []
+            }
+          ]
+        }
+      ]
     }
   }
 }
