@@ -23,8 +23,8 @@
           {{ $t(item.name) }}
         </b-nav-item>
         <b-nav-item-dropdown
-          v-for="item in nav"
-          :key="item.name"
+          v-for="(item, id) in nav"
+          :key="id"
           :text="item.name"
           :class=" item.dropdown ? '' : 'd-none'"
         >
