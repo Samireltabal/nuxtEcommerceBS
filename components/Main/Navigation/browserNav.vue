@@ -22,6 +22,14 @@
         >
           {{ $t(item.name) }}
         </b-nav-item>
+        <b-nav-item
+          v-for="item in nav"
+          :key="item.name"
+          :to="localePath(item.link)"
+          :class=" item.guest && !loggedin ? '' : 'd-none'"
+        >
+          {{ $t(item.name) }}
+        </b-nav-item>
         <b-nav-item-dropdown
           v-for="(item, id) in nav"
           :key="id"
@@ -66,6 +74,13 @@ export default {
           children: []
         },
         {
+          name: 'Login',
+          link: '/login',
+          guest: true,
+          dropdown: false,
+          children: []
+        },
+        {
           name: 'Dropdown',
           link: '/products',
           dropdown: true,
@@ -85,6 +100,20 @@ export default {
           ]
         }
       ]
+    }
+  },
+  computed: {
+    loggedin () {
+      return this.$auth.loggedIn
+    }
+  },
+  methods: {
+    handleApperance (state) {
+      if (state.item === 'auth') {
+        return 'd-none'
+      } else {
+        return ''
+      }
     }
   }
 }
