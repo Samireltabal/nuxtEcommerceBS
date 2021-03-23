@@ -1,25 +1,21 @@
 <template>
-  <form>
+  <form @submit.prevent="loginUser()">
     <h3>Sign In</h3>
 
     <div class="form-group">
       <label>Email address</label>
-      <input type="email" class="form-control form-control-lg">
+      <input v-model="email" type="email" class="form-control form-control-lg">
     </div>
 
     <div class="form-group">
       <label>Password</label>
-      <input type="password" class="form-control form-control-lg">
+      <input v-model="password" type="password" class="form-control form-control-lg">
     </div>
     <div class="d-grid gap-2">
-      <button class="btn btn-primary my-2" type="button">
+      <button type="submit" class="btn btn-primary my-2">
         {{ $t('logintitle') }}
       </button>
     </div>
-    <button type="submit" class="btn btn-dark btn-lg btn-block">
-      Sign In
-    </button>
-
     <p class="forgot-password text-right mt-2 mb-4">
       <router-link to="/forgot-password">
         Forgot password ?
@@ -43,7 +39,36 @@ export default {
   layout: 'sign',
   data () {
     return {
-
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    loginUser () {
+      this.$auth.loginWith('local', {
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      }).then((response) => {
+        // this.$notify({
+        //   group: 'main',
+        //   type: 'success',
+        //   title: '<i class="fa fa-check"></i>  <b>' + this.$t('success.login') + '</b>',
+        //   duration: 10000
+        // })
+        this.$auth.setUser(response.data.user)
+        this.$api.setToken(response.data.token, 'Bearer')
+      }).catch(() => {
+        // this.$notify({
+        //   group: 'main',
+        //   type: 'error',
+        //   title: '<i class="fa fa-check"></i>  <b>' + this.$t('failed.login') + '</b>',
+        //   duration: 10000
+        // })
+      }).finally(() => {
+        this.$router.push('/')
+      })
     }
   }
 }

@@ -14,44 +14,18 @@
             {{ locale.name }}
           </b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item
-          v-for="item in nav"
-          :key="item.name"
-          :to="localePath(item.link)"
-          :class=" item.dropdown ? 'd-none' : ''"
-        >
-          {{ $t(item.name) }}
-        </b-nav-item>
-        <b-nav-item
-          v-for="item in nav"
-          :key="item.name"
-          :to="localePath(item.link)"
-          :class=" item.guest && !loggedin ? '' : 'd-none'"
-        >
-          {{ $t(item.name) }}
-        </b-nav-item>
-        <b-nav-item-dropdown
-          v-for="(item, id) in nav"
-          :key="id"
-          :text="item.name"
-          :class=" item.dropdown ? '' : 'd-none'"
-        >
-          <b-nav-item
-            v-for="child in item.children"
-            :key="child.name"
-            :to="localePath(child.link)"
-            :class=" child.dropdown ? 'd-none' : ''"
-          >
-            {{ $t(child.name) }}
-          </b-nav-item>
-        </b-nav-item-dropdown>
+        <navItem v-for="item in nav" :key="item.name" :item="item" />
       </b-navbar-nav>
     </b-navbar>
   </div>
 </template>
 <script>
+import NavItem from '../Navigation/navItem'
 export default {
   name: 'BroswerNav',
+  components: {
+    NavItem
+  },
   props: {
     langs: {
       type: Array,
@@ -64,26 +38,43 @@ export default {
         {
           name: 'home',
           link: '/',
-          dropdown: false,
+          type: 'link',
+          shown: 'all',
           children: []
         },
         {
           name: 'Products',
           link: '/products',
-          dropdown: false,
+          type: 'link',
+          shown: 'all',
           children: []
         },
         {
           name: 'Login',
           link: '/login',
-          guest: true,
-          dropdown: false,
+          type: 'link',
+          shown: 'guest',
+          children: []
+        },
+        {
+          name: 'Profile',
+          link: '/profile',
+          type: 'link',
+          shown: 'loggedin',
+          children: []
+        },
+        {
+          name: 'Logout',
+          link: '/logout',
+          type: 'link',
+          shown: 'loggedin',
           children: []
         },
         {
           name: 'Dropdown',
           link: '/products',
-          dropdown: true,
+          type: 'dropdown',
+          shown: 'all',
           children: [
             {
               name: 'Products1',
@@ -109,7 +100,7 @@ export default {
   },
   methods: {
     handleApperance (state) {
-      if (state.item === 'auth') {
+      if (state.type === 'link') {
         return 'd-none'
       } else {
         return ''
