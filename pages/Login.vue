@@ -58,7 +58,7 @@ export default {
         //   duration: 10000
         // })
         this.$auth.setUser(response.data.user)
-        this.$api.setToken(response.data.token, 'Bearer')
+        this.$api.setToken(response.data.access_token, 'Bearer')
       }).catch(() => {
         // this.$notify({
         //   group: 'main',
