@@ -69,6 +69,22 @@ export default {
           logout: { url: '/auth/logout', method: 'post' },
           user: { url: '/auth/user', method: 'get' }
         }
+      },
+      laravelJWT: {
+        provider: 'laravel/jwt',
+        url: process.env.BASE_URL,
+        endpoints: {
+          login: { url: 'auth/login', method: 'post', propertyName: 'access_token' },
+          logout: { url: 'auth/logout', method: 'post' },
+          user: { url: 'auth/user', method: 'get' }
+        },
+        token: {
+          property: 'access_token',
+          maxAge: 60 * 60
+        },
+        refreshToken: {
+          maxAge: 20160 * 60
+        }
       }
     }
   },

@@ -44,8 +44,8 @@ export default {
     }
   },
   methods: {
-    loginUser () {
-      this.$auth.loginWith('local', {
+    async loginUser () {
+      await this.$auth.loginWith('laravelJWT', {
         data: {
           email: this.email,
           password: this.password
@@ -58,7 +58,7 @@ export default {
         //   duration: 10000
         // })
         this.$auth.setUser(response.data.user)
-        this.$api.setToken(response.data.access_token, 'Bearer')
+        this.$axios.setToken(response.data.access_token, 'Bearer')
       }).catch(() => {
         // this.$notify({
         //   group: 'main',

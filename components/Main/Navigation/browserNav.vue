@@ -50,7 +50,7 @@ export default {
           children: []
         },
         {
-          name: 'Login',
+          name: 'login',
           link: '/login',
           type: 'link',
           shown: 'guest',
