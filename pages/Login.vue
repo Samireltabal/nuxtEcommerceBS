@@ -11,6 +11,14 @@
       <label>Password</label>
       <input v-model="password" type="password" class="form-control form-control-lg">
     </div>
+    <b-form-checkbox
+      id="remember-box"
+      v-model="remember"
+      name="remember-box"
+      switch
+    >
+      {{ $t('remember me') }}
+    </b-form-checkbox>
     <div class="d-grid gap-2">
       <button type="submit" class="btn btn-primary my-2">
         {{ $t('logintitle') }}
@@ -40,7 +48,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      remember: true
     }
   },
   methods: {
@@ -48,7 +57,8 @@ export default {
       await this.$auth.loginWith('laravelJWT', {
         data: {
           email: this.email,
-          password: this.password
+          password: this.password,
+          remember: this.remember
         }
       }).then((response) => {
         // this.$notify({

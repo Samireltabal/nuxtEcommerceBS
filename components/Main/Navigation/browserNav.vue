@@ -5,15 +5,7 @@
         <b-navbar-brand href="#">
           NavBar
         </b-navbar-brand>
-        <b-nav-item-dropdown :text="$t('Language')" left>
-          <b-dropdown-item
-            v-for="locale in langs"
-            :key="locale.code"
-            :to="switchLocalePath(locale.code)"
-          >
-            {{ locale.name }}
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
+        <LocaleBrowser />
         <navItem v-for="item in nav" :key="item.name" :item="item" />
       </b-navbar-nav>
     </b-navbar>
@@ -21,17 +13,19 @@
 </template>
 <script>
 import NavItem from '../Navigation/navItem'
+import LocaleBrowser from '../../Localization/localeBrowser'
 export default {
   name: 'BroswerNav',
   components: {
-    NavItem
+    NavItem,
+    LocaleBrowser
   },
-  props: {
-    langs: {
-      type: Array,
-      required: true
-    }
-  },
+  // props: {
+  //   langs: {
+  //     type: Array,
+  //     required: true
+  //   }
+  // },
   data () {
     return {
       nav: [
