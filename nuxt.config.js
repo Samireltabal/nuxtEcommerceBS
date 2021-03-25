@@ -54,25 +54,12 @@ export default {
   ],
   auth: {
     strategies: {
-      local: {
-        token: {
-          property: 'access_token',
-          required: true,
-          type: 'Bearer'
-        },
-        user: {
-          property: 'user',
-          autoFetch: true
-        },
-        endpoints: {
-          login: { url: '/auth/login', method: 'post', propertyName: 'access_token' },
-          logout: { url: '/auth/logout', method: 'post' },
-          user: { url: '/auth/user', method: 'get' }
-        }
-      },
       laravelJWT: {
         provider: 'laravel/jwt',
         url: process.env.BASE_URL,
+        rewriteRedirects: true,
+        fullPathRedirect: true,
+        watchLoggedIn: false,
         endpoints: {
           login: { url: 'auth/login', method: 'post', propertyName: 'access_token' },
           logout: { url: 'auth/logout', method: 'post' },
@@ -89,6 +76,15 @@ export default {
     }
   },
   i18n: {
+    strategy: 'prefix',
+    vuex: {
+      moduleName: 'i18n', syncLocale: true, syncMessages: false, syncRouteParams: false
+    },
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      onlyOnRoot: true // recommended
+    },
     locales: [
       {
         code: 'en',

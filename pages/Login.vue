@@ -66,9 +66,10 @@ export default {
         //   title: '<i class="fa fa-check"></i>  <b>' + this.$t('failed.login') + '</b>',
         //   duration: 10000
         // })
-      }).finally(() => {
-        this.$router.push('/')
       })
+      // .finally(() => {
+      //   this.$router.push('/')
+      // })
     }
   }
 }
