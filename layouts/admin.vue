@@ -40,7 +40,7 @@
             v-model="group"
             active-class="deep-purple--text text--accent-4"
           >
-            <v-list-item>
+            <v-list-item to="/admin/">
               <v-list-item-icon>
                 <v-icon>mdi-home</v-icon>
               </v-list-item-icon>
@@ -71,7 +71,7 @@
               </v-list-item-icon>
               <v-list-item-title>Orders</v-list-item-title>
             </v-list-item>
-            <v-list-item>
+            <v-list-item to="/admin/settings">
               <v-list-item-icon>
                 <v-icon>mdi-cog</v-icon>
               </v-list-item-icon>
@@ -85,7 +85,6 @@
       <nuxt />
     </v-main>
     <v-footer
-      fixed
       :padless="true"
     >
       <v-card

@@ -18,6 +18,12 @@
     >
       {{ $t(item.name) }}
     </b-nav-item>
+    <b-nav-item
+      v-if="item.type === 'link' && item.shown === 'admin' && authenticated && this.$auth.user.role === 'admin'"
+      :to="localePath(item.link)"
+    >
+      {{ $t(item.name) }}
+    </b-nav-item>
     <b-nav-item-dropdown
       v-if="item.type === 'dropdown'"
       :text="item.name"

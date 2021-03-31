@@ -47,7 +47,7 @@ export default {
           name: 'Admin',
           link: '/admin',
           type: 'link',
-          shown: 'loggedin',
+          shown: 'admin',
           children: []
         },
         {
