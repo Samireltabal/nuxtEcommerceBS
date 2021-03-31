@@ -78,6 +78,7 @@
 <script>
 export default {
   layout: 'admin',
+  middleware: 'adminstrator',
   data () {
     return {
       dismissSecs: 10,

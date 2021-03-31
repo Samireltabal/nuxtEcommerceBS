@@ -4,6 +4,9 @@
     <h1 class="title">
       {{ currentLocale }} - {{ $t('welcome') }} Profile - {{ ip.message }}
     </h1>
+    <p>
+      {{ $store.state.auth.user.role }}
+    </p>
     <div class="links">
       <a
         href="https://nuxtjs.org/"
@@ -76,6 +79,7 @@
 <script>
 export default {
   layout: 'Default',
+  loading: true,
   middleware: 'auth',
   async asyncData ({ $axios }) {
     const ip = await $axios.$get('ping')
