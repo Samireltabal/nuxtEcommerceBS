@@ -1,6 +1,8 @@
 {
   "home": "الرئيسية",
   "welcome": "مرحباً",
+  "failed to update": "فشل في التعديل",
+  "successfully updated settings": "تم التعديل بنجاح",
   "top.message" : "مرحباً في موقع ديفا",
   "home.title": "مؤسسة ديفا التجارية",
   "products.title": "المنتجات",

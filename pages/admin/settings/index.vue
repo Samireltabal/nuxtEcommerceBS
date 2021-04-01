@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-alert v-if="show" type="success">
+      <v-alert v-if="show" :type="status">
         {{ message }}
       </v-alert>
       <Setting v-for="set in settings" :key="set.name" :setting="set" @success="success" />
@@ -23,6 +23,7 @@ export default {
       dismissCountDown: 0,
       settings: {},
       message: '',
+      status: '',
       show: false,
       showDismissibleAlert: false
     }
@@ -36,8 +37,9 @@ export default {
     }
   },
   methods: {
-    success (message) {
+    success (message, status) {
       this.message = message
+      this.status = status
       this.show = true
       setTimeout(() => {
         this.show = false

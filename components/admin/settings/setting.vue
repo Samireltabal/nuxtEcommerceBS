@@ -34,11 +34,10 @@ export default {
         name: this.setting.name,
         val: this.value
       }
-      this.$axios.post('/settings/create', data).then((res) => {
-        this.$emit('success', 'successfully updated settings')
-        console.log(res)
-      }).catch((err) => {
-        console.log(err)
+      this.$axios.post('/settings/create', data).then(() => {
+        this.$emit('success', this.$t('successfully updated settings'), 'success')
+      }).catch(() => {
+        this.$emit('success', this.$t('failed to update'), 'error')
       })
     }
   }

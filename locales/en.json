@@ -1,6 +1,8 @@
 {
   "home": "Home",
   "welcome": "welcome",
+  "failed to update": "failed to update",
+  "successfully updated settings": "successfully updated settings",
   "top.message" : "Welcome to Divaacosmetics",
   "home.title": "DivaaCosmetics",
   "products.title": "Products",
