@@ -1,15 +1,20 @@
 <template>
-  <div class="container">
-    <div>
-      <p>
-        {{ settings }}
-      </p>
-    </div>
-  </div>
+  <v-row>
+    <v-col>
+      <v-alert v-if="show" type="success">
+        {{ message }}
+      </v-alert>
+      <Setting v-for="set in settings" :key="set.name" :setting="set" @success="success" />
+    </v-col>
+  </v-row>
 </template>
 
 <script>
+import Setting from '@/components/admin/settings/setting'
 export default {
+  components: {
+    Setting
+  },
   layout: 'admin',
   middleware: 'adminstrator',
   data () {
@@ -17,6 +22,8 @@ export default {
       dismissSecs: 10,
       dismissCountDown: 0,
       settings: {},
+      message: '',
+      show: false,
       showDismissibleAlert: false
     }
   },
@@ -29,11 +36,13 @@ export default {
     }
   },
   methods: {
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert () {
-      this.dismissCountDown = this.dismissSecs
+    success (message) {
+      this.message = message
+      this.show = true
+      setTimeout(() => {
+        this.show = false
+        this.$fetch()
+      }, 5000)
     }
   }
 }

@@ -2,7 +2,6 @@
   <v-app>
     <div>
       <v-app-bar
-        absolute
         color="white"
         elevate-on-scroll
         scroll-target="#scrolling-techniques-7"
@@ -82,7 +81,9 @@
       </v-navigation-drawer>
     </div>
     <v-main>
-      <nuxt />
+      <v-container>
+        <nuxt />
+      </v-container>
     </v-main>
     <v-footer
       :padless="true"
