@@ -15,6 +15,13 @@
         <v-btn icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
+        <v-btn
+          v-for="locale in availableLocales"
+          :key="locale.code"
+          @click="changeLocale(locale)"
+        >
+          {{ locale.name }}
+        </v-btn>
         <v-btn icon @click="$router.push('/')">
           <v-icon>mdi-home</v-icon>
         </v-btn>
@@ -151,6 +158,17 @@ export default {
         return 'rtl'
       } else {
         return 'ltr'
+      }
+    }
+  },
+  methods: {
+    changeLocale (locale) {
+      this.$i18n.locale = locale.code
+      this.$router.push(this.switchLocalePath(locale.code))
+      if (locale.dir === 'rtl') {
+        this.$vuetify.rtl = true
+      } else {
+        this.$vuetify.rtl = false
       }
     }
   }

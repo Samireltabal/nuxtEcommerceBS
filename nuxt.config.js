@@ -93,11 +93,13 @@ export default {
     locales: [
       {
         code: 'en',
-        name: 'English'
+        name: 'English',
+        dir: 'ltr'
       },
       {
         code: 'ar',
-        name: 'العربية'
+        name: 'العربية',
+        dir: 'rtl'
       }
     ],
     defaultLocale: 'en',
