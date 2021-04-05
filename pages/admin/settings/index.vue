@@ -1,11 +1,20 @@
 <template>
   <v-row>
-    <v-col>
-      <v-alert v-if="show" :type="status">
-        {{ message }}
-      </v-alert>
-      <Setting v-for="set in settings" :key="set.name" :setting="set" @success="success" />
-    </v-col>
+    <v-row>
+      <h3>{{ $t('used values') }}</h3>
+      <v-col>
+        <v-alert v-if="show" :type="status">
+          {{ message }}
+        </v-alert>
+        <Setting v-for="set in settings.updated" :key="set.name" :setting="set" icon="mdi-update" @success="success" />
+      </v-col>
+    </v-row>
+    <v-row>
+      <h3>{{ $t('defaults') }}</h3>
+      <v-col>
+        <Setting v-for="set in settings.default" :key="set.name" :setting="set" icon="mdi-plus" @success="success" />
+      </v-col>
+    </v-row>
   </v-row>
 </template>
 

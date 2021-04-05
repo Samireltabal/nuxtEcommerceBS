@@ -7,7 +7,7 @@
           :label="setting.name"
           :hint="setting.type"
           required
-          append-outer-icon="mdi-send"
+          :append-outer-icon="icon"
           @click:append-outer="updateSet"
         />
       </v-form>
@@ -21,6 +21,10 @@ export default {
     setting: {
       required: true,
       type: Object
+    },
+    icon: {
+      type: String,
+      default: 'mdi-send'
     }
   },
   data () {
