@@ -6,13 +6,28 @@
         <v-alert v-if="show" :type="status">
           {{ message }}
         </v-alert>
-        <Setting v-for="set in settings.updated" :key="set.name" :setting="set" icon="mdi-update" @success="success" />
+        <Setting
+          v-for="set in settings.updated"
+          :key="set.name"
+          :setting="set"
+          icon="mdi-update"
+          :is-new="false"
+          @success="success"
+        />
       </v-col>
     </v-row>
     <v-row>
       <h3>{{ $t('defaults') }}</h3>
       <v-col>
-        <Setting v-for="set in settings.default" :key="set.name" :setting="set" icon="mdi-plus" @success="success" />
+        <Setting
+          v-for="set in settings.default"
+          :key="set.name"
+          :setting="set"
+          icon="mdi-plus"
+          :is-new="true"
+          :show="handleExistance(set)"
+          @success="success"
+        />
       </v-col>
     </v-row>
   </v-row>
@@ -54,6 +69,15 @@ export default {
         this.show = false
         this.$fetch()
       }, 5000)
+    },
+    handleExistance (set) {
+      if (Object.values(this.settings.updated).includes(set.name) >= 0) {
+        console.log('item found', set)
+        return true
+      } else {
+        console.log('item not found', set)
+        return false
+      }
     }
   }
 }
