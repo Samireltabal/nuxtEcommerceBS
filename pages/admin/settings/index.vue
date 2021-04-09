@@ -1,5 +1,10 @@
 <template>
   <v-row>
+    <v-row class="mt-4">
+      <v-col>
+        <p>{{ $t('lorem') }}</p>
+      </v-col>
+    </v-row>
     <v-row>
       <h3>{{ $t('used values') }}</h3>
       <v-col>
@@ -71,13 +76,14 @@ export default {
       }, 5000)
     },
     handleExistance (set) {
-      if (Object.values(this.settings.updated).includes(set.name) >= 0) {
-        console.log('item found', set)
-        return true
-      } else {
-        console.log('item not found', set)
-        return false
+      const settings = this.settings.updated
+      for (let index = 0; index < settings.length; index++) {
+        const setting = settings[index]
+        if (setting.name === set.name) {
+          return false
+        }
       }
+      return true
     }
   }
 }
