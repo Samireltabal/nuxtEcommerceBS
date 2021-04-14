@@ -2,14 +2,11 @@
   <v-row>
     <v-row class="mt-4">
       <v-col>
-        <p>{{ $t('settings.paragraph') }}</p>
+        <p>{{ $t('lorem') }}</p>
       </v-col>
     </v-row>
     <v-row>
       <h3>{{ $t('used values') }}</h3>
-      <p>
-        {{ $t('Values updated by admin') }}
-      </p>
       <v-col>
         <v-alert v-if="show" :type="status">
           {{ message }}
@@ -26,9 +23,6 @@
     </v-row>
     <v-row>
       <h3>{{ $t('defaults') }}</h3>
-      <p>
-        {{ $t('unused / default values') }}
-      </p>
       <v-col>
         <Setting
           v-for="set in settings.default"
