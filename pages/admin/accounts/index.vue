@@ -6,43 +6,16 @@
       </v-col>
     </v-row>
     <v-row>
-      <h3>{{ $t('used values') }}</h3>
-      <v-col>
-        <v-alert v-if="show" :type="status">
-          {{ message }}
-        </v-alert>
-        <Setting
-          v-for="set in settings.updated"
-          :key="set.name"
-          :setting="set"
-          icon="mdi-update"
-          :is-new="false"
-          @success="success"
-        />
-      </v-col>
-    </v-row>
-    <v-row>
-      <h3>{{ $t('defaults') }}</h3>
-      <v-col>
-        <Setting
-          v-for="set in settings.default"
-          :key="set.name"
-          :setting="set"
-          icon="mdi-plus"
-          :is-new="true"
-          :show="handleExistance(set)"
-          @success="success"
-        />
-      </v-col>
+      {{ accounts }}
     </v-row>
   </v-row>
 </template>
 
 <script>
-import Setting from '@/components/admin/settings/setting'
+// import Setting from '@/components/admin/settings/setting'
 export default {
   components: {
-    Setting
+    // Setting
   },
   layout: 'admin',
   middleware: 'adminstrator',
@@ -50,7 +23,7 @@ export default {
     return {
       dismissSecs: 10,
       dismissCountDown: 0,
-      settings: {},
+      accounts: {},
       message: '',
       status: '',
       show: false,
@@ -58,7 +31,7 @@ export default {
     }
   },
   async fetch () {
-    this.settings = await this.$axios.$get('/settings')
+    this.accounts = await this.$axios.$get('/admin/accounts/list')
   },
   computed: {
     availableLocales () {
