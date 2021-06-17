@@ -8,8 +8,11 @@
         :items="accounts.data"
         :fields="fields"
       >
+        <template #cell(thumb)="data">
+          <b-img v-bind="mainProps" rounded alt="Rounded image" :src="data.item.images.thumbnail" />
+        </template>
         <template #cell(name)="data">
-          <b-avatar :src="data.item.thumb" class="mx-auto my-0 py-0" /> {{ data.item.name }}
+          {{ data.item.name }}
         </template>
         <template #cell(address)="data">
           {{ !data.item.address ? 'not set' : data.item.address.country + ' ,' + data.item.address.state + ' ,' + data.item.address.city + ', ' + data.item.address.line_1 }}
@@ -49,6 +52,7 @@ export default {
     return {
       dismissSecs: 10,
       isBusy: false,
+      mainProps: { width: 75, height: 75, class: 'm1' },
       options: [
         { value: 10, text: '10' },
         { value: 20, text: '20' },
@@ -59,6 +63,11 @@ export default {
         {
           key: 'id',
           label: this.$t('ID')
+        },
+        {
+          key: 'thumb',
+          label: this.$t('Thumbnail'),
+          sortable: false
         },
         {
           key: 'name',
@@ -96,7 +105,7 @@ export default {
   },
   async fetch () {
     this.isBusy = true
-    this.accounts = await this.$axios.$get('/admin/accounts/list?page=' + this.currentPage + '&per_page=' + this.perPage).finally(() => {
+    this.accounts = await this.$axios.$get('/products?page=' + this.currentPage + '&count=' + this.perPage).finally(() => {
       this.isBusy = false
     })
   },

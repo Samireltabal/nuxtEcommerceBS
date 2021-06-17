@@ -59,7 +59,7 @@
               </v-list-item-icon>
               <v-list-item-title>Accounts</v-list-item-title>
             </v-list-item>
-            <v-list-item>
+            <v-list-item to="/admin/products">
               <v-list-item-icon>
                 <v-icon>mdi-folder</v-icon>
               </v-list-item-icon>
