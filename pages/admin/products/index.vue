@@ -14,6 +14,11 @@
         <template #cell(name)="data">
           {{ data.item.name }}
         </template>
+        <template #cell(barcode)="data">
+          <barcode :value="data.item.barcode" :text="data.item.name + ' - ' + data.item.price + $t('SAR')" font-size="10" width="1" height="40">
+            Show this if the rendering fails.
+          </barcode>
+        </template>
         <template #cell(address)="data">
           {{ !data.item.address ? 'not set' : data.item.address.country + ' ,' + data.item.address.state + ' ,' + data.item.address.city + ', ' + data.item.address.line_1 }}
         </template>
@@ -42,9 +47,10 @@
 
 <script>
 // import Setting from '@/components/admin/settings/setting'
+import VueBarcode from 'vue-barcode'
 export default {
   components: {
-    // Setting
+    barcode: VueBarcode
   },
   layout: 'admin',
   middleware: 'adminstrator',
@@ -75,18 +81,18 @@ export default {
           sortable: false
         },
         {
-          key: 'email',
-          label: this.$t('Email'),
+          key: 'price',
+          label: this.$t('Price'),
           sortable: false
         },
         {
-          key: 'phone_number',
-          label: this.$t('Phone'),
+          key: 'category.name',
+          label: this.$t('Category'),
           sortable: false
         },
         {
-          key: 'role',
-          label: this.$t('role'),
+          key: 'barcode',
+          label: this.$t('Barcode'),
           sortable: false
         },
         {
