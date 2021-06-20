@@ -15,9 +15,56 @@
           {{ data.item.name }}
         </template>
         <template #cell(barcode)="data">
-          <barcode :value="data.item.barcode" :text="data.item.name + ' - ' + data.item.price + $t('SAR')" font-size="10" width="1" height="40">
-            Show this if the rendering fails.
-          </barcode>
+          <b-button
+            id="show-btn"
+            v-b-tooltip.hover
+            variant="outline-success"
+            size="sm"
+            title="Add Sale"
+            @click="$bvModal.show('bv-modal-' + data.item.id)"
+          >
+            <v-icon>mdi-currency-usd</v-icon>
+          </b-button>
+          <b-button
+            id="show-btn"
+            v-b-tooltip.hover
+            variant="outline-danger"
+            size="sm"
+            title="Delete Product"
+            @click="$bvModal.show('bv-modal-' + data.item.id)"
+          >
+            <v-icon>mdi-delete</v-icon>
+          </b-button>
+          <b-button
+            id="show-btn"
+            v-b-tooltip.hover
+            variant="outline-warning"
+            size="sm"
+            title="Edit Product"
+            @click="$bvModal.show('bv-modal-' + data.item.id)"
+          >
+            <v-icon>mdi-circle-edit-outline</v-icon>
+          </b-button>
+          <b-button
+            id="show-btn"
+            v-b-tooltip.hover
+            variant="outline-info"
+            size="sm"
+            title="Show Barcode"
+            @click="$bvModal.show('bv-modal-' + data.item.id)"
+          >
+            <v-icon>mdi-barcode</v-icon>
+          </b-button>
+          <b-modal :id="'bv-modal-' + data.item.id" hide-footer>
+            <template #modal-title>
+              {{ $t('Barcode') }}
+            </template>
+            <div class="d-block text-center">
+              <barcode :value="data.item.barcode" :text="data.item.name + ' - ' + data.item.price + $t('SAR')" font-size="10" width="1" height="40">
+                Show this if the rendering fails.
+              </barcode>
+            </div>
+          </b-modal>
         </template>
         <template #cell(address)="data">
           {{ !data.item.address ? 'not set' : data.item.address.country + ' ,' + data.item.address.state + ' ,' + data.item.address.city + ', ' + data.item.address.line_1 }}
@@ -92,7 +139,7 @@ export default {
         },
         {
           key: 'barcode',
-          label: this.$t('Barcode'),
+          label: this.$t('Options'),
           sortable: false
         },
         {
