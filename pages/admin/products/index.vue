@@ -21,7 +21,7 @@
             variant="outline-success"
             size="sm"
             title="Add Sale"
-            @click="$bvModal.show('bv-modal-' + data.item.id)"
+            @click="$bvModal.show('sale-' + data.item.id)"
           >
             <v-icon>mdi-currency-usd</v-icon>
           </b-button>
@@ -55,6 +55,14 @@
           >
             <v-icon>mdi-barcode</v-icon>
           </b-button>
+          <b-modal :id="'sale-' + data.item.id" hide-footer>
+            <template #modal-title>
+              {{ $t('Add Sale') }} For {{ data.item.name }}
+            </template>
+            <div class="d-block text-center">
+              <p>Add Sale Form</p>
+            </div>
+          </b-modal>
           <b-modal :id="'bv-modal-' + data.item.id" hide-footer>
             <template #modal-title>
               {{ $t('Barcode') }}
