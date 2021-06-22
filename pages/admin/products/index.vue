@@ -1,5 +1,20 @@
 <template>
   <v-row>
+    <v-row class="mx-2" align="start">
+      <v-col>
+        <v-btn
+          class="ml-2"
+          dark
+          color="indigo"
+          @click="$router.push('/admin/products/new')"
+        >
+          <v-icon dark>
+            mdi-plus
+          </v-icon>
+          New Product
+        </v-btn>
+      </v-col>
+    </v-row>
     <v-row class="mt-4">
       <b-table
         striped
@@ -11,6 +26,17 @@
         <template #cell(thumb)="data">
           <b-img v-bind="mainProps" rounded alt="Rounded image" :src="data.item.images.thumbnail" />
         </template>
+        <template #cell(price)="data">
+          <span
+            :class="data.item.OnSale ? 'font-weight-light text-danger' : ''"
+            :style="data.item.OnSale ? 'text-decoration: line-through' : ''"
+          >
+            {{ data.item.price }} SAR
+          </span>
+          <span :class="data.item.OnSale ? 'font-weight-bold text-success' : ''">
+            {{ data.item.OnSale ? ' - ' + data.item.SalePrice + ' SAR' : '' }}
+          </span>
+        </template>
         <template #cell(name)="data">
           {{ data.item.name }}
         </template>
@@ -18,12 +44,17 @@
           <b-button
             id="show-btn"
             v-b-tooltip.hover
-            variant="outline-success"
+            :variant="!data.item.OnSale ? 'outline-success' : 'outline-danger'"
             size="sm"
-            title="Add Sale"
-            @click="$bvModal.show('sale-' + data.item.id)"
+            :title="!data.item.OnSale ? 'add sale' : 'remove sale'"
+            @click="data.item.OnSale ? deleteSale(data.item.sale_id) : $bvModal.show('sale-' + data.item.id) ; saleForm.product_id = data.item.id"
           >
-            <v-icon>mdi-currency-usd</v-icon>
+            <v-icon v-if="!data.item.OnSale">
+              mdi-currency-usd
+            </v-icon>
+            <v-icon v-else>
+              mdi-currency-usd-off
+            </v-icon>
           </b-button>
           <b-button
             id="show-btn"
@@ -31,7 +62,7 @@
             variant="outline-danger"
             size="sm"
             title="Delete Product"
-            @click="$bvModal.show('bv-modal-' + data.item.id)"
+            @click="deleteProduct(data.item.id)"
           >
             <v-icon>mdi-delete</v-icon>
           </b-button>
@@ -41,7 +72,7 @@
             variant="outline-warning"
             size="sm"
             title="Edit Product"
-            @click="$bvModal.show('bv-modal-' + data.item.id)"
+            @click="$router.push('/admin/products/edit/' + data.item.id)"
           >
             <v-icon>mdi-circle-edit-outline</v-icon>
           </b-button>
@@ -60,7 +91,33 @@
               {{ $t('Add Sale') }} For {{ data.item.name }}
             </template>
             <div class="d-block text-center">
-              <p>Add Sale Form</p>
+              <label for="example-datepicker">Choose a date</label>
+              <b-form-datepicker id="start_at-datepicker" v-model="saleForm.start_at" class="mb-2" />
+              <b-form-datepicker id="end_at-datepicker" v-model="saleForm.expire_at" class="mb-2" />
+              <b-form-checkbox
+                id="sale-checkbox"
+                v-model="saleForm.fixed"
+                name="sale-checkbox-1"
+                :value="true"
+                :unchecked-value="false"
+              >
+                Fixed Rate
+              </b-form-checkbox>
+              <b-form-input v-model="saleForm.value" type="number" placeholder="Enter value" />
+              <v-btn
+                depressed
+                elevation="2"
+                outlined
+                block
+                :loading="saleButtonLoading"
+                color="success"
+                class="mt-2"
+                plain
+                raised
+                @click="submitSale()"
+              >
+                Submit
+              </v-btn>
             </div>
           </b-modal>
           <b-modal :id="'bv-modal-' + data.item.id" hide-footer>
@@ -113,6 +170,14 @@ export default {
     return {
       dismissSecs: 10,
       isBusy: false,
+      saleButtonLoading: false,
+      saleForm: {
+        expire_at: '',
+        start_at: '',
+        fixed: false,
+        product_id: '',
+        value: 0
+      },
       mainProps: { width: 75, height: 75, class: 'm1' },
       options: [
         { value: 10, text: '10' },
@@ -219,6 +284,91 @@ export default {
         this.show = false
         this.$fetch()
       }, 5000)
+    },
+    submitSale () {
+      this.saleButtonLoading = true
+      this.$axios.post('/sale/create', this.saleForm).then((response) => {
+        this.$swal.fire(
+          '',
+          response.data.message,
+          'success'
+        )
+        this.$bvModal.hide('sale-' + this.saleForm.product_id)
+        this.$fetch()
+        this.saleButtonLoading = false
+      }).catch((err) => {
+        this.$swal.fire(
+          '',
+          err.response.data.message,
+          'error'
+        )
+        this.saleButtonLoading = false
+      })
+    },
+    deleteProduct (id) {
+      const swalWithBootstrapButtons = this.$swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      swalWithBootstrapButtons.fire({
+        title: this.$t('Are you sure?'),
+        text: this.$t("You won't be able to revert this!"),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: this.$t('cancel'),
+        confirmButtonText: this.$t('Yes, delete it!')
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$axios.get(`/products/delete/${id}`).then(() => {
+            swalWithBootstrapButtons.fire(
+              this.$t('Deleted!'),
+              this.$t('record has been deleted.'),
+              'success'
+            )
+            this.$fetch()
+          }).catch((err) => {
+            swalWithBootstrapButtons.fire(
+              this.$t('something went wrong'),
+              err.response.data.message,
+              'error'
+            )
+          })
+        }
+      })
+    },
+    deleteSale (id) {
+      this.$swal.fire({
+        title: this.$t('Are you sure?'),
+        text: this.$t("You won't be able to revert this!"),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: this.$t('cancel'),
+        confirmButtonText: this.$t('Yes, delete it!')
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$axios.post('/sale/delete', { sale_id: id }).then(() => {
+            this.$swal.fire(
+              this.$t('Deleted!'),
+              this.$t('sale has been deleted.'),
+              'success'
+            )
+            this.$fetch()
+          }).catch((err) => {
+            this.$swal.fire(
+              this.$t('something went wrong'),
+              err.response.data.message,
+              'error'
+            )
+          })
+        }
+      })
     },
     handleExistance (set) {
       const settings = this.settings.updated

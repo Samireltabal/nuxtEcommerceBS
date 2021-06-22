@@ -53,6 +53,7 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'vue-sweetalert2/nuxt',
     'nuxt-i18n',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next'
