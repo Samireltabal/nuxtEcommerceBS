@@ -1,16 +1,31 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col>
-        <h1>hello</h1>
+  <b-container fluid>
+    <b-row>
+      <b-col>
+        <b-breadcrumb>
+          <b-breadcrumb-item to="/">
+            {{ $t('Home') }}
+          </b-breadcrumb-item>
+          <b-breadcrumb-item to="/admin">
+            {{ $t('Admin') }}
+          </b-breadcrumb-item>
+          <b-breadcrumb-item to="/admin/products">
+            {{ $t('Products') }}
+          </b-breadcrumb-item>
+          <b-breadcrumb-item active>
+            {{ product.name }}
+          </b-breadcrumb-item>
+        </b-breadcrumb>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <p>
-          <pre>
-            {{ product }}
-          </pre>
+          {{ product }}
         </p>
-      </v-col>
-    </v-row>
-  </v-container>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 <script>
 export default {
