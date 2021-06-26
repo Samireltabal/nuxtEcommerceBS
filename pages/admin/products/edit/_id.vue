@@ -1,5 +1,16 @@
 <template>
   <b-container fluid>
+    <v-alert
+      outlined
+      :type="alert.type"
+      text
+      :value="alert.status"
+    >
+      {{ alert.message }}
+    </v-alert>
+    <b-btn @click="alert.status = ! alert.status">
+      test
+    </b-btn>
     <b-row>
       <b-col>
         <b-breadcrumb>
@@ -145,7 +156,7 @@
                   dark
                   :loading="isLoading"
                   x-large
-                  @click="isLoading = true"
+                  @click="submitUpdate"
                 >
                   <v-icon>mdi-circle-edit-outline</v-icon><span class="mx-2">Update</span>
                 </v-btn>
@@ -155,7 +166,22 @@
         </b-col>
       </b-col>
       <b-col>
-        <h4>Gallery</h4>
+        <b-row>
+          <b-col>
+            <h4>Gallery</h4>
+            <div v-for="item in product.media" :key="item.id">
+              <img :src="item.url" :alt="product.images.name" class="img-thumbnail rounded">
+              <v-btn small color="red" dark class="ImageButton" @click="deleteMedia(id)">
+                <v-icon>mdi-delete</v-icon> -  {{ item.collection_name }}
+              </v-btn>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <h4>Meta</h4>
+          </b-col>
+        </b-row>
       </b-col>
     </b-row>
     <b-row>
@@ -179,13 +205,18 @@ export default {
   data () {
     return {
       updateProduct: {},
-      isLoading: false
+      isLoading: false,
+      alert: {
+        type: 'success',
+        message: 'some thing to be written here',
+        status: true
+      }
     }
   },
   computed: {
     formData () {
       return {
-        id: this.product.id,
+        product_id: this.product.id,
         name: {
           en: this.product.translatableFields.name.en,
           ar: this.product.translatableFields.name.ar
@@ -204,25 +235,36 @@ export default {
     }
   },
   methods: {
-    uploadImageSuccess (result) {
-      return result[0] // FormData
+    submitUpdate () {
+      this.isLoading = true
+      this.$axios.post('/products/admin/update', this.formData).then(() => {
+        this.$swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.isLoading = false
+      }).catch((err) => {
+        this.$swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: err.response.data.message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.isLoading = false
+      })
     },
-    uploadImageLoaded (image) {
-      return image.name || image.file
-    },
-    uploadImageClicked (image) {
-      return image.name || image.file
-    },
-    uploadImageRemoved (image) {
-      return image.name || image.file
-    },
-    uploadImageFailure (image) {
-      return image.name || image.file
-    },
-    uploadImageAttempt (image) {
-      return image.name || image.file
-    },
-    uploadImageSubmit (images) {
+    deleteMedia (id) {
+      const form = {
+        product_id: this.product.id,
+        media_id: id
+      }
+      this.$axios.post('/products/admin/media', form).then(() => {
+        alert('ok')
+      })
     }
   }
 }
