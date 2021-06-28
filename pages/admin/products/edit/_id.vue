@@ -2,15 +2,13 @@
   <b-container fluid>
     <v-alert
       outlined
+      dismissible
       :type="alert.type"
       text
       :value="alert.status"
     >
       {{ alert.message }}
     </v-alert>
-    <b-btn @click="alert.status = ! alert.status">
-      test
-    </b-btn>
     <b-row>
       <b-col>
         <b-breadcrumb>
@@ -171,7 +169,7 @@
             <h4>Gallery</h4>
             <div v-for="item in product.media" :key="item.id">
               <img :src="item.url" :alt="product.images.name" class="img-thumbnail rounded">
-              <v-btn small color="red" dark class="ImageButton" @click="deleteMedia(id)">
+              <v-btn small color="red" dark class="ImageButton" @click="deleteMedia(item.id)">
                 <v-icon>mdi-delete</v-icon> -  {{ item.collection_name }}
               </v-btn>
             </div>
@@ -208,8 +206,8 @@ export default {
       isLoading: false,
       alert: {
         type: 'success',
-        message: 'some thing to be written here',
-        status: true
+        message: '',
+        status: false
       }
     }
   },
@@ -262,8 +260,18 @@ export default {
         product_id: this.product.id,
         media_id: id
       }
-      this.$axios.post('/products/admin/media', form).then(() => {
-        alert('ok')
+      this.$axios.delete('/products/admin/product/image', form).then(() => {
+        this.alert = {
+          type: 'success',
+          message: 'media successfully deleted',
+          status: true
+        }
+      }).catch((err) => {
+        this.alert = {
+          type: 'error',
+          message: err.response.data.message,
+          status: true
+        }
       })
     }
   }
