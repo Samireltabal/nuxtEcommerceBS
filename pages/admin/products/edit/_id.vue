@@ -167,6 +167,32 @@
         <b-row>
           <b-col>
             <h4>Gallery</h4>
+            <b-row>
+              <b-col cols="10">
+                <v-file-input
+                  v-model="files"
+                  counter
+                  multiple
+                  show-size
+                  small-chips
+                  truncate-length="15"
+                />
+              </b-col>
+              <b-col cols="2">
+                <v-btn
+                  :loading="mediaUploading"
+                  :disabled="mediaUploading"
+                  color="green"
+                  class="ma-2 white--text"
+                  fab
+                  @click="uploadMedia()"
+                >
+                  <v-icon dark>
+                    mdi-cloud-upload
+                  </v-icon>
+                </v-btn>
+              </b-col>
+            </b-row>
             <div v-for="item in product.media" :key="item.id">
               <img :src="item.url" :alt="product.images.name" class="img-thumbnail rounded">
               <v-btn small color="red" dark class="ImageButton" @click="deleteMedia(item.id)">
@@ -203,7 +229,9 @@ export default {
   data () {
     return {
       updateProduct: {},
+      files: [],
       isLoading: false,
+      mediaUploading: false,
       alert: {
         type: 'success',
         message: '',
@@ -254,6 +282,12 @@ export default {
         })
         this.isLoading = false
       })
+    },
+    uploadMedia () {
+      this.mediaUploading = true
+      setTimeout(() => {
+        this.mediaUploading = false
+      }, 5000)
     },
     deleteMedia (id) {
       const form = {
